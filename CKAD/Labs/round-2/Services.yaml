@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Services
+metadata:
+   name: Service name
+spec:
+  type: NodePort # Port type
+  ports:
+    - targetPort: 80 # if not given, has same value as port. This points to the port of pod
+      port: 80 # Mandatory
+      nodePort: 31367 # between the range of 30000 to 327**. If not given, some random free port between the range will be taken automatically
+  selector: # selector and label as per pod defination file. If more than one pod found with this selector values. service wil be shared between all te pods. This is applicable when nodes distributed accros multiple nodes
+    app: front
+    env: testing
+
+# ################ ##################
+## Cluster the IP of multiple pods
+apiVersion: v1
+kind: Services
+metadata:
+   name: Service name
+spec:
+  type: ClusterIP # CluserIP is the default value
+  ports:
+    - targetPort: 80
+      port: 80
+  selector:
+    app: front
+    env: testing

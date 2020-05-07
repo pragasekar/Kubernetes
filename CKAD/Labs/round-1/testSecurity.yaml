@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper
+spec:
+  securityContext:
+    runAsUser: 1010 # BY placing this here security context set at pod level
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command: ['sleep','4800']
+    #securityContext:
+     #runAsUser: my new container user # BY placing this here security context set at container level
+    capabilities:
+      add: ["admin"] # capability can set only on container level

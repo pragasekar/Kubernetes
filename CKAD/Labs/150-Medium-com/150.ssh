@@ -1,0 +1,47 @@
+#  List all the pods showing name and namespace with a json path expression
+kubectl get pods -o=jsonpath="{.items[*]['metadata.name', 'metadata.namespace']}"
+
+# Output the yaml file of the pod you just created without the cluster-specific information
+kubectl get po nginx -o yaml --export
+
+# Exposing the pod on port
+kubectl run nginx --image=nginx:1.17.4 --restart=Never --port=80
+
+# Update the image on running pod
+kubectl set image pod/nginx nginx=nginx:1.15-alpine
+kubectl set image pod/nginx containername=nginx:1.15-alpine
+
+# Check the previous logs of the pod
+kubectl logs busybox -p
+kubectl logs busybox --previous
+
+#  Create a busybox pod with command sleep 3600
+kubectl run busybox --image=busybox --restart=Never -- /bin/sh -c "sleep 3600"
+
+# Run cmd at container level
+kubectl exec -it busybox -c busybox3 -- ls
+
+# multi lable selector
+kubectl get pods -l 'env in (dev,prod)'
+
+# Edit the label of the existing container
+kubectl label pod <container-name> key(existing)=value --overwrite=true
+#Remove the label
+kubectl label pod nginx2 env-
+
+# annotate the running pod
+ kubectl annotate pod nginx1 name=webapp
+
+ # Check the roll out status
+kubectl rollout status deployment webapp
+kubectl rollout history deployment webapp --revison=3
+kubectl rollout undo deployment webapp --to-revison=3
+
+
+# Auto Scale
+kubectl autoscale deployment webapp --max=20 --min=10 --cpu-percent=85
+
+# CPU Utilization
+kubectl top pod --all-namespaces | sort --reverse --key 3 --numeric | head -3
+
+# 150. Create a NetworkPolicy which denies all ingress traffic

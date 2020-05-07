@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: labpod
+  template:
+    metadata:
+      labels:
+        tier: labpod
+    spec:
+      containers:
+      - name: deployment-container
+        image: httpd:2.4-alpine

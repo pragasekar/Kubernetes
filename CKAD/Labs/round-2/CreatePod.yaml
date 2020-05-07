@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  securityContext: # same can be set at container level. In that case, container level values overwrites the pod level value
+    runAsUser: 1000
+    runAsGroup: 3000
+    capabilities:
+      add: ["SYS_TIME","AUDIT"]
+  containers:
+    - name: nginx
+      image: nginx
+      securityContext:
+        runAsUser: 1000
+      command: ["sleep","5000"] ## commend to docker image. Supports only string values(with in ""),  command is same as "EnteryPoint" in Docker file
+      #command: ## By alternate we can define the commends as like yaml array type
+        - "sleep" ##
+        - "5000" ##
+      args: ["--color", "red"] ## arguments to cmd, args are same as "cmd" in Docker file
+      env:
+       - name: APP_COLOR
+         value: pink
+       - name: APP_COLOR
+         valueFrom:
+           configMapKeyRef:
+             name: webapp-config-map # config map object name
+             key: APP_COLOR # key from config map data
+       - name: DB_USER
+         valueFrom:
+           secretKeyRef:
+             name: mysecret # secret object name
+             key: DB_USER # key from secret object
+      envFrom: # pass the whole config map as environment variable
+        - configMapRef:
+            name: webapp-config-map # pass the whole config map as environment variableasdfasdfa
+        - secretRef:
+            name: test-secret

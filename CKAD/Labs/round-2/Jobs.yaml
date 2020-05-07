@@ -1,0 +1,4 @@
+apiVersion: batch/v1kind: Jobmetadata:
+  creationTimestamp: null  labels:    run: whalesay  name: whalesayspec:  backoffLimit: 6  completions: 10  template:    metadata:      creationTimestamp: null      labels:
+        run: whalesay
+    spec:      containers:      - image: docker/whalesay        name: whalesay        command: ["cowsay I am going to ace CKAD!"]        resources: {}      restartPolicy: Never

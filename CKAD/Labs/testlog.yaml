@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: testlog
+  name: testlog
+spec:
+  containers:
+  - command: ["/bin/sh","-c"]
+#    args: ["echo pragathees>test.log"]
+   # args: ["while true","do echo pragathees > ","sleep 10;","done"]
+    args: ["while true; do echo pragathees > /opt/mytestpod/pragatheeslog.log;sleep 10;done"]
+    image: busybox
+    name: testlog
+    resources: {}
+    volumeMounts:
+      - name: myv
+        mountPath: myspace
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+  volumes:
+    - name: myv
+      hostPath:
+        path: /cygdrive/c/Pragathees/Tech/K8s/volumesspace
+status: {}

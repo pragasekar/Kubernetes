@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dockerlearning-pod
+  labels:
+    app: dockerlearning
+    tier: dev
+spec:
+  containers:
+  - name: dockerlearning-containers
+    image: pragasekar/dockerlearning:part2
